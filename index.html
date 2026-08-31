@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're Invited — Baby Davis</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #090b18;
+  font-family: Arial, sans-serif;
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+  color: white;
+  background:
+    radial-gradient(circle at center, #26366d 0%, #090b18 70%);
+  transition: opacity .7s ease;
+}
+
+#intro.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-box {
+  max-width: 700px;
+}
+
+h1 {
+  font-size: clamp(42px, 11vw, 85px);
+  margin: 0 0 15px;
+  font-weight: 900;
+}
+
+.intro-box p {
+  font-size: clamp(20px, 5vw, 30px);
+  margin-bottom: 35px;
+}
+
+button {
+  border: none;
+  border-radius: 50px;
+  padding: 18px 35px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  background: white;
+  color: #111;
+  box-shadow: 0 8px 30px rgba(0,0,0,.5);
+}
+
+#invitation {
+  min-height: 100vh;
+  padding: 30px 15px 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: min(900px, 100%);
+  background: white;
+  color: #111;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 15px 60px rgba(0,0,0,.5);
+}
+
+.watercolor {
+  padding: 35px 25px;
+  background:
+    radial-gradient(circle at 0% 0%, #75b9ff 0%, transparent 25%),
+    radial-gradient(circle at 100% 0%, #ff86ad 0%, transparent 25%),
+    radial-gradient(circle at 0% 100%, #75b9ff 0%, transparent 25%),
+    radial-gradient(circle at 100% 100%, #ff86ad 0%, transparent 25%),
+    white;
+}
+
+.title {
+  font-size: clamp(45px, 9vw, 85px);
+  font-weight: 900;
+  margin: 0;
+}
+
+.blue {
+  color: #1264b3;
+}
+
+.pink {
+  color: #e72d70;
+}
+
+.script {
+  font-family: cursive;
+  font-size: clamp(35px, 7vw, 65px);
+  margin: 10px 0 25px;
+}
+
+.banner {
+  display: inline-block;
+  padding: 12px 35px;
+  border-radius: 8px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(90deg,#1675c7,#ed3271);
+}
+
+.subtitle {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.detail {
+  flex: 1;
+  min-width: 180px;
+}
+
+.detail strong {
+  display: block;
+  font-size: 25px;
+  margin-top: 8px;
+}
+
+.section-title {
+  font-size: 34px;
+  font-weight: bold;
+  margin: 30px 0 20px;
+}
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 15px;
+}
+
+.game {
+  border-right: 1px solid #aaa;
+  padding: 10px;
+}
+
+.game:last-child {
+  border-right: none;
+}
+
+.game h3 {
+  color: #1264b3;
+}
+
+.game p {
+  line-height: 1.45;
+}
+
+.reveal {
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#1675c7,#ed3271);
+  color: white;
+}
+
+.reveal h2 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.reveal p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.bottom {
+  margin-top: 30px;
+  display: flex;
+  gap: 25px;
+  text-align: left;
+}
+
+.bottom > div {
+  flex: 1;
+}
+
+.bottom h3 {
+  color: #1264b3;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+@media(max-width:700px) {
+  .games {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .game:nth-child(2) {
+    border-right: none;
+  }
+
+  .bottom {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="intro">
+  <div class="intro-box">
+    <h1>🎉 YOU'VE BEEN INVITED! 🎉</h1>
+    <p>Come celebrate <b>Baby Davis</b> with us!</p>
+    <button id="openButton">TAP TO OPEN ✨</button>
+  </div>
+</div>
+
+<section id="invitation">
+
+<div class="card">
+
+<div class="watercolor">
+
+<h2 class="title">
+<span class="blue">GENDER</span>
+<span class="pink">REVEAL</span>
+</h2>
+
+<div class="script">
+for Baby Davis
+</div>
+
+<div class="banner">
+BOY OR GIRL?
+</div>
+
+<p class="subtitle">
+Join Alex & Sam as we celebrate and find out<br>
+whether Baby Davis will be our little boy or little girl!
+</p>
+
+<div class="details">
+
+<div class="detail">
+📅
+<strong>Saturday</strong>
+September 12, 2026<br>
+<strong class="pink">1:00 PM</strong>
+</div>
+
+<div class="detail">
+📍
+<strong>Danville Memorial Park</strong>
+</div>
+
+<div class="detail">
+🎉
+<strong>Come Celebrate!</strong>
+Baby Davis
+</div>
+
+</div>
+
+<hr>
+
+<div class="section-title">
+🎮 FUN & GAMES 🎮
+</div>
+
+<div class="games">
+
+<div class="game">
+<h3>DUE DATE GUESS</h3>
+<p>
+Guess Baby Davis's birthday,
+birth time, weight, and length.
+Closest prediction wins!
+</p>
+</div>
+
+<div class="game">
+<h3>DON'T SAY "BABY"</h3>
+<p>
+Watch what you say throughout
+the party. Say the wrong word
+and you might lose your piece!
+</p>
+</div>
+
+<div class="game">
+<h3>BABY NAME BATTLE</h3>
+<p>
+Bring your funniest or most
+creative baby names and see
+which ones come out on top!
+</p>
+</div>
+
+<div class="game">
+<h3>WHO KNOWS MOM & DAD BEST?</h3>
+<p>
+Put your knowledge to the test
+with a fun quiz about Alex & Sam!
+</p>
+</div>
+
+</div>
+
+<div class="reveal">
+
+<h2>
+💦 THE BIG REVEAL: WATER-GUN BATTLE! 💦
+</h2>
+
+<p>
+Come wearing a <b>PLAIN WHITE T-SHIRT</b>
+that you don't mind getting wet!
+</p>
+
+<p>
+Everyone who participates will be divided
+into Team Boy 💙 and Team Girl 🩷.
+</p>
+
+<p>
+Alex & Sam will face off in the final battle.
+Neither will know which gun contains
+the secret color.
+</p>
+
+<h2>
+3... 2... 1... THEY SHOOT!
+</h2>
+
+<h2>
+💙🩷 WE'LL FINALLY KNOW WHO BABY DAVIS IS! 🩷💙
+</h2>
+
+</div>
+
+<div class="bottom">
+
+<div>
+<h3>🍽 FOOD & DRINKS</h3>
+<p>
+We'll have food and drinks available
+for everyone. Favorite snacks or drinks
+are welcome but never required.
+</p>
+</div>
+
+<div>
+<h3>🎁 GIFTS</h3>
+<p>
+Your presence and support mean more
+than anything!
+</p>
+
+<p>
+💙 Bring <b>DIAPERS</b> if you think it's a BOY.
+</p>
+
+<p>
+🩷 Bring <b>WIPES</b> if you think it's a GIRL.
+</p>
+</div>
+
+<div>
+<h3>❤️ MOST IMPORTANTLY...</h3>
+<p>
+We'd love to have the people we care
+about most there as we celebrate this
+exciting chapter of our lives.
+</p>
+</div>
+
+</div>
+
+<h2 class="script">
+We can't wait to see you there!
+</h2>
+
+<h2>
+Alex & Sam ❤️
+</h2>
+
+</div>
+</div>
+
+</section>
+
+<script>
+
+const intro = document.getElementById("intro");
+const button = document.getElementById("openButton");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let W;
+let H;
+let particles = [];
+let fireworks = [];
+let animationRunning = false;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+resize();
+
+window.addEventListener("resize", resize);
+
+function confetti(x,y,count) {
+
+  for(let i=0;i<count;i++) {
+
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 3 + Math.random() * 8;
+
+    particles.push({
+      x:x,
+      y:y,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed,
+      size:3+Math.random()*5,
+      life:80+Math.random()*80,
+      rotation:Math.random()*6,
+      color:Math.random() < .5 ? "#1475c7" : "#ed3271"
+    });
+
+  }
+
+}
+
+function launchFirework() {
+
+  fireworks.push({
+    x:W*(.1+Math.random()*.8),
+    y:H+20,
+    velocity:-(10+Math.random()*5),
+    target:H*(.15+Math.random()*.35)
+  });
+
+}
+
+function animate() {
+
+  if(!animationRunning) return;
+
+  ctx.clearRect(0,0,W,H);
+
+  for(let i=fireworks.length-1;i>=0;i--) {
+
+    const f=fireworks[i];
+
+    f.y += f.velocity;
+    f.velocity += .13;
+
+    ctx.fillStyle="white";
+    ctx.fillRect(f.x,f.y,4,4);
+
+    if(f.y <= f.target) {
+
+      confetti(f.x,f.y,120);
+
+      fireworks.splice(i,1);
+
+    }
+
+  }
+
+  for(let i=particles.length-1;i>=0;i--) {
+
+    const p=particles[i];
+
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += .12;
+    p.life--;
+
+    ctx.save();
+
+    ctx.translate(p.x,p.y);
+    ctx.rotate(p.rotation);
+
+    ctx.globalAlpha=Math.max(0,p.life/140);
+
+    ctx.fillStyle=p.color;
+
+    ctx.fillRect(
+      -p.size/2,
+      -p.size/2,
+      p.size*2,
+      p.size
+    );
+
+    ctx.restore();
+
+    if(p.life<=0 || p.y>H+50) {
+
+      particles.splice(i,1);
+
+    }
+
+  }
+
+  requestAnimationFrame(animate);
+
+}
+
+function openInvitation(event) {
+
+  if(event) {
+    event.preventDefault();
+  }
+
+  if(animationRunning) return;
+
+  animationRunning=true;
+
+  intro.classList.add("hide");
+
+  confetti(W*.2,H*.25,120);
+  confetti(W*.8,H*.25,120);
+  confetti(W*.5,H*.2,150);
+
+  for(let i=0;i<10;i++) {
+
+    setTimeout(
+      launchFirework,
+      i*200
+    );
+
+  }
+
+  animate();
+
+  setTimeout(function(){
+
+    document.getElementById("invitation")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+  },700);
+
+  setTimeout(function(){
+
+    animationRunning=false;
+    ctx.clearRect(0,0,W,H);
+
+  },10000);
+
+}
+
+button.addEventListener("click",openInvitation);
+
+intro.addEventListener("click",function(event){
+
+  if(event.target !== button) {
+    openInvitation(event);
+  }
+
+});
+
+</script>
+
+</body>
+</html>
